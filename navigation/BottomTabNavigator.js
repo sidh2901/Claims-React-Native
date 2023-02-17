@@ -17,10 +17,10 @@ export default function BottomTabNavigator() {
 
   return (
     <BottomTab.Navigator
-      initialRouteName="TabOne"
+      initialRouteName="Cards"
       screenOptions={{ tabBarActiveTintColor: Colors[colorScheme].tint }}>
       <BottomTab.Screen
-        name="TabOne"
+        name="Cards"
         component={TabOneNavigator}
         options={{
           headerShown: false,
@@ -30,7 +30,7 @@ export default function BottomTabNavigator() {
         }}
       />
       <BottomTab.Screen
-        name="TabTwo"
+        name="Bar Chart"
         component={TabTwoNavigator}
         options={{
           headerShown: false,
@@ -40,7 +40,7 @@ export default function BottomTabNavigator() {
         }}
       />
       <BottomTab.Screen
-        name="TabThree"
+        name="Pie Chart"
         component={TabThreeNavigator}
         options={{
           headerShown: false,
@@ -67,9 +67,9 @@ function TabOneNavigator() {
   return (
     <TabOneStack.Navigator>
       <TabOneStack.Screen
-        name="TabOneScreen"
+        name="Home Page"
         component={TabOneScreen}
-        options={{ headerTitle: "Claims Action Cards" }}
+        options={{ headerTitle: "Claims Cards" }}
       />
     </TabOneStack.Navigator>
   );
@@ -81,7 +81,7 @@ function TabTwoNavigator() {
   return (
     <TabTwoStack.Navigator>
       <TabTwoStack.Screen
-        name="TabTwoScreen"
+        name="Bar Chart"
         component={TabTwoScreen}
         options={{ headerTitle: "Bar Chart Analytics" }}
       />
@@ -95,7 +95,7 @@ function TabThreeNavigator() {
   return (
     <TabThreeStack.Navigator>
       <TabThreeStack.Screen
-        name="TabThreeScreen"
+        name="Pie Chart"
         component={TabThreeScreen}
         options={{ headerTitle: "Pie Chart Analytics" }}
       />
