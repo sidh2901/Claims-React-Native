@@ -9,6 +9,7 @@ import Colors from "../constants/Colors";
 import TabOneScreen from "../screens/TabOneScreen";
 import TabTwoScreen from "../screens/TabTwoScreen";
 import TabThreeScreen from "../screens/TabThreeScreen";
+import SimpleCardCarousel from "../screens/SimpleCardCarousel";
 
 const BottomTab = createBottomTabNavigator();
 
@@ -49,6 +50,16 @@ export default function BottomTabNavigator() {
           ),
         }}
       />
+      <BottomTab.Screen
+        name="Search by ID"
+        component={SimpleCardCarousel}
+        options={{
+          headerShown: false,
+          tabBarIcon: ({ color }) => (
+            <TabBarIcon name="ios-code" color={color} />
+          ),
+        }}
+      />
     </BottomTab.Navigator>
   );
 }
@@ -69,7 +80,7 @@ function TabOneNavigator() {
       <TabOneStack.Screen
         name="Home Page"
         component={TabOneScreen}
-        options={{ headerTitle: "Claims Cards" }}
+        options={{ headerTitle: "Claims Dashboard" }}
       />
     </TabOneStack.Navigator>
   );
@@ -100,5 +111,17 @@ function TabThreeNavigator() {
         options={{ headerTitle: "Pie Chart Analytics" }}
       />
     </TabThreeStack.Navigator>
+  );
+}
+
+function TabFourNavigator() {
+  return (
+    <TabFourStack.Navigator>
+      <TabFourStack.Screen
+        name="Pie Chart"
+        component={SimpleCardCarousel}
+        options={{ headerTitle: "Carousel View" }}
+      />
+    </TabFourStack.Navigator>
   );
 }

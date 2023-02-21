@@ -26,6 +26,11 @@ export default {
               TabThreeScreen: "three",
             },
           },
+          TabFour: {
+            screens: {
+              SimpleCardCarousel: "four",
+            },
+          },
         },
       },
       NotFound: "*",

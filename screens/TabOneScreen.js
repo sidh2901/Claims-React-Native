@@ -7,7 +7,14 @@ import Dashboard from "react-native-dashboard";
 import { FontAwesome } from "react-native-vector-icons";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { create } from "apisauce";
-import { Box, FlatList, Center, NativeBaseProvider } from "native-base";
+import {
+  Box,
+  FlatList,
+  Center,
+  NativeBaseProvider,
+  Container,
+} from "native-base";
+import axios from "axios";
 
 const Icon = ({ icon, item, background }) => (
   <FontAwesome
@@ -19,65 +26,91 @@ const Icon = ({ icon, item, background }) => (
     style={item.styleIcon}
   />
 );
-// const data = [
-//   {
-//     name: "Total Claims",
-//     background: "#3498db",
-//     icon: (item, background) => Icon({ icon: "book", item, background }),
-//     iconColor: "#0d47a1",
-//     rippleColor: "#000",
-//   },
-//   {
-//     name: "Total Facilities",
-//     background: "#b71c1c",
-//     icon: (item, background) => Icon({ icon: "building", item, background }),
-//     styleIcon: { color: "#0d47a1" },
-//   },
-//   {
-//     name: "Total Customers",
-//     background: "#4caf50",
-//     icon: (item, background) => Icon({ icon: "users", item, background }),
-//     styleIcon: { color: "#0d47a1", fontWeight: "bold" },
-//   },
-//   {
-//     name: "Claim Amount",
-//     background: "#4caf50",
-//     icon: (item, background) => Icon({ icon: "money", item, background }),
-//     styleName: { color: "#0d47a1", fontWeight: "bold" },
-//   },
-//   {
-//     name: "Paid Amount",
-//     nameColor: "#3498db",
-//     background: "#02cbef",
-//     icon: (item, background) => Icon({ icon: "dollar", item, background }),
-//     styleName: { color: "#0d47a1", fontWeight: "bold" },
-//   },
-// ];
+
 export default function TabOneScreen() {
   const card = ({ name }) => console.log("Card: " + name);
-  const [data, setData] = useState([]);
-  const api = create({
-    baseURL: "https://api.sampleapis.com/coffee",
-  });
-  const fetchData = () => {
-    //make request to baseURL + 'hot'
-    api
-      .get("/hot")
-      .then((response) => response.data)
-      .then((data) => setData(data));
+  let responseValue = 0;
+  const [facility, setFacility] = useState(0);
+  const [customer, setCustomer] = useState(0);
+  const [totalClaim, setTotalClaim] = useState(0);
+  const [claimAmount, setClaimAmount] = useState(0);
+  const [paidAmount, setPaidAmount] = useState(0);
+  const fetchFacility = async () => {
+    const resp = await fetch("http://20.62.171.46:4001/facility/count");
+    const data = await resp.json();
+    setFacility(data);
   };
-
+  const fetchCustomer = async () => {
+    const resp = await fetch("http://20.62.171.46:4002/customer/count");
+    const data = await resp.json();
+    setCustomer(data);
+  };
+  const fetchTotalClaim = async () => {
+    const resp = await fetch("http://20.62.171.46:4000/claims/claimscount");
+    const data = await resp.json();
+    setTotalClaim(data);
+  };
+  const fetchClaimAmount = async () => {
+    const resp = await fetch(
+      "http://20.62.171.46:4000/claims/totalclaimamount"
+    );
+    const data = await resp.json();
+    setClaimAmount(data);
+  };
+  const fetchPaidAmount = async () => {
+    const resp = await fetch("http://20.62.171.46:4000/claims/totalpaidamount");
+    const data = await resp.json();
+    setPaidAmount(data);
+  };
+  console.log(facility, "facility");
   useEffect(() => {
-    fetchData();
+    fetchFacility();
+    fetchCustomer();
+    fetchTotalClaim();
+    fetchClaimAmount();
+    fetchPaidAmount();
   }, []);
-
+  const data = [
+    {
+      name: `Total Claims - ${totalClaim} `,
+      background: "#3498db",
+      icon: (item, background) => Icon({ icon: "book", item, background }),
+      iconColor: "#0d47a1",
+      rippleColor: "#000",
+    },
+    {
+      name: `Total Facilities - ${facility} `,
+      background: "#b71c1c",
+      icon: (item, background) => Icon({ icon: "building", item, background }),
+      styleIcon: { color: "#0d47a1" },
+    },
+    {
+      name: `Total Customers -${customer}`,
+      background: "#4caf50",
+      icon: (item, background) => Icon({ icon: "users", item, background }),
+      styleIcon: { color: "#0d47a1", fontWeight: "bold" },
+    },
+    {
+      name: `Claimed Amount - $${claimAmount}0`,
+      background: "#4caf50",
+      icon: (item, background) => Icon({ icon: "money", item, background }),
+      styleName: { color: "#0d47a1", fontWeight: "bold" },
+    },
+    {
+      name: `Paid Amount - $${paidAmount} `,
+      nameColor: "#3498db",
+      background: "#02cbef",
+      icon: (item, background) => Icon({ icon: "dollar", item, background }),
+      styleName: { color: "#0d47a1", fontWeight: "bold" },
+    },
+  ];
+  //console.log(totalFacilities);
   return (
     <SafeAreaView style={styles.container}>
       <Dashboard
         data={data}
         background={true}
         card={card}
-        keyExtractor={(item) => item.id.toString()}
         column={2}
         rippleColor={"#3498db"}
       />
@@ -88,6 +121,7 @@ export default function TabOneScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    paddingBottom: 1,
     backgroundColor: "black",
   },
 });
