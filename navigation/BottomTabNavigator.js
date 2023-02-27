@@ -10,6 +10,7 @@ import TabOneScreen from "../screens/TabOneScreen";
 import TabTwoScreen from "../screens/TabTwoScreen";
 import TabThreeScreen from "../screens/TabThreeScreen";
 import SimpleCardCarousel from "../screens/SimpleCardCarousel";
+import BarChartScreen from "../screens/BarChartScreen";
 
 const BottomTab = createBottomTabNavigator();
 
@@ -50,16 +51,16 @@ export default function BottomTabNavigator() {
           ),
         }}
       />
-      <BottomTab.Screen
-        name="Search by ID"
-        component={SimpleCardCarousel}
+      {/* <BottomTab.Screen
+        name=""
+        component={BarChartScreen}
         options={{
           headerShown: false,
           tabBarIcon: ({ color }) => (
             <TabBarIcon name="ios-code" color={color} />
           ),
         }}
-      />
+      /> */}
     </BottomTab.Navigator>
   );
 }
@@ -92,9 +93,9 @@ function TabTwoNavigator() {
   return (
     <TabTwoStack.Navigator>
       <TabTwoStack.Screen
-        name="Bar Chart"
-        component={TabTwoScreen}
-        options={{ headerTitle: "Bar Chart Analytics" }}
+        name="Bar Chart Analytics"
+        component={BarChartScreen}
+        options={{ headerTitle: "Claim Amount Analytics" }}
       />
     </TabTwoStack.Navigator>
   );
@@ -106,9 +107,9 @@ function TabThreeNavigator() {
   return (
     <TabThreeStack.Navigator>
       <TabThreeStack.Screen
-        name="Pie Chart"
+        name="Pie Chart Analytics"
         component={TabThreeScreen}
-        options={{ headerTitle: "Pie Chart Analytics" }}
+        options={{ headerTitle: "Claim Status Analytics" }}
       />
     </TabThreeStack.Navigator>
   );
@@ -119,7 +120,7 @@ function TabFourNavigator() {
     <TabFourStack.Navigator>
       <TabFourStack.Screen
         name="Pie Chart"
-        component={SimpleCardCarousel}
+        component={BarChartScreen}
         options={{ headerTitle: "Carousel View" }}
       />
     </TabFourStack.Navigator>

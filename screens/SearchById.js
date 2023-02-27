@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 
+// import all the components we are going to use
 import {
-  ScrollView,
   SafeAreaView,
   Text,
   StyleSheet,
@@ -10,7 +10,7 @@ import {
   TextInput,
 } from "react-native";
 
-export default function SimpleCardCarousel() {
+const App = () => {
   const [search, setSearch] = useState("");
   const [filteredDataSource, setFilteredDataSource] = useState([]);
   const [masterDataSource, setMasterDataSource] = useState([]);
@@ -60,6 +60,7 @@ export default function SimpleCardCarousel() {
       </Text>
     );
   };
+
   const ItemSeparatorView = () => {
     return (
       // Flat List Item Separator
@@ -77,6 +78,7 @@ export default function SimpleCardCarousel() {
     // Function for click on an item
     alert("Id : " + item.id + " Title : " + item.title);
   };
+
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <View style={styles.container}>
@@ -96,7 +98,7 @@ export default function SimpleCardCarousel() {
       </View>
     </SafeAreaView>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
