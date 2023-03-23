@@ -15,6 +15,7 @@ import {
   Container,
 } from "native-base";
 import axios from "axios";
+import CurrencyFormatter from "react-native-currency-formatter";
 
 const Icon = ({ icon, item, background }) => (
   <FontAwesome
@@ -86,21 +87,28 @@ export default function TabOneScreen() {
     },
     {
       name: `Total Customers -${customer}`,
-      background: "#4caf50",
+      background: "yellow",
       icon: (item, background) => Icon({ icon: "users", item, background }),
+      styleName: { color: "#0d47a1", fontWeight: "bold" },
       styleIcon: { color: "#0d47a1", fontWeight: "bold" },
     },
     {
-      name: `Claimed Amount - $${claimAmount}0`,
+      name: `Claimed Amount - $${claimAmount.toLocaleString("en-US", {
+        style: "currency",
+        currency: "USD",
+      })}.00`,
       background: "#4caf50",
       icon: (item, background) => Icon({ icon: "money", item, background }),
-      styleName: { color: "#0d47a1", fontWeight: "bold" },
+      styleIcon: { color: "#0d47a1", fontWeight: "bold" },
     },
     {
-      name: `Paid Amount - $${paidAmount} `,
-      nameColor: "#3498db",
-      background: "#02cbef",
+      name: `Paid Amount - $${paidAmount.toLocaleString("en-US", {
+        style: "currency",
+        currency: "USD",
+      })}0`,
+      background: "white",
       icon: (item, background) => Icon({ icon: "dollar", item, background }),
+      styleIcon: { color: "#0d47a1", fontWeight: "bold" },
       styleName: { color: "#0d47a1", fontWeight: "bold" },
     },
   ];

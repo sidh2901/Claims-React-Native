@@ -69,100 +69,105 @@ export default function BarChartScreen() {
   return (
     <ScrollView>
       <View style={styles.container}>
-        <BarChart
-          data={{
-            labels: Object.keys(bardata).splice(0, 4),
-            datasets: [
-              {
-                data: Object.values(bardata).splice(0, 4),
-                barPercentage: 0.5,
-                barRadius: 5,
-                key: "dataset-1", // unique key value
+        <View style={styles.container}>
+          <BarChart
+            data={{
+              labels: Object.keys(bardata).splice(0, 4),
+              datasets: [
+                {
+                  data: Object.values(bardata).splice(0, 4),
+                  barPercentage: 1,
+                  barRadius: 7,
+                  key: "dataset-1",
+                },
+              ],
+            }}
+            width={Dimensions.get("window").width - 18}
+            height={300}
+            yAxisLabel={"$"}
+            legend={"Customers"}
+            verticalLabelRotation={15}
+            chartConfig={{
+              propsForLabels: {
+                fontSize: 12,
               },
-            ],
-          }}
-          width={Dimensions.get("window").width}
-          height={300}
-          yAxisLabel={"$"}
-          legend={"Customers"}
-          verticalLabelRotation={15}
-          chartConfig={{
-            propsForLabels: {
-              fontSize: 13,
-              marginLeft: 10,
-            },
-            legend: ["Legend Title"],
-            backgroundColor: "#00000",
-            backgroundGradientFrom: "#f2b40a",
-            backgroundGradientTo: "#99f7e3",
-            decimalPlaces: 2,
-            color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
-            style: {
-              borderRadius: 16,
-            },
-            valueAccessor: ({ item }) => {
-              return `$${item}`;
-            },
-          }}
-          style={{ borderRadius: 16 }}
-          onPress={(value) => handleBarPress(value)}
-        />
-        <View style={styles.toggleContainer}>
-          {/* <Text style={styles.toggleLabel}>Toggle:</Text> */}
-          <Switch
-            trackColor={{ false: "#767577", true: "#81b0ff" }}
-            thumbColor={useFirstData ? "#f5dd4b" : "#f4f3f4"}
-            ios_backgroundColor="#3e3e3e"
-            onValueChange={() => setUseFirstData(!useFirstData)}
-            value={useFirstData}
+              legend: ["Legend Title"],
+              backgroundColor: "rgb(135,143,104)",
+              backgroundGradientFrom: "rgb(202,182,164)",
+              backgroundGradientTo: "#F3D17C",
+              decimalPlaces: 2,
+              color: (opacity = 1) => `rgba(0, 0,0, ${opacity})`,
+              style: {
+                borderRadius: 16,
+              },
+              valueAccessor: ({ item }) => {
+                return `$${item}`;
+              },
+              //color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+            }}
+            style={{ borderRadius: 16 }}
+            onPress={(value) => handleBarPress(value)}
           />
-          <Text style={styles.toggleText}>
-            {useFirstData ? "Closed Claims" : "Open Claims"}
-          </Text>
+
+          <View style={styles.toggleContainer}>
+            {/* <Text style={styles.toggleLabel}>Toggle:</Text> */}
+            <Switch
+              trackColor={{ false: "#767577", true: "#767577" }}
+              thumbColor={useFirstData ? "#f5dd4b" : "#f4f3f4"}
+              ios_backgroundColor="#3e3e3e"
+              onValueChange={() => setUseFirstData(!useFirstData)}
+              value={useFirstData}
+            />
+            <Text style={styles.toggleText}>
+              {useFirstData ? "Closed Claims" : "Open Claims"}
+            </Text>
+          </View>
+
+          {selectedBarValue && (
+            <View
+              style={{
+                position: "absolute",
+                backgroundColor: "white",
+                padding: 8,
+                borderRadius: 4,
+                borderColor: "gray",
+                borderWidth: 1,
+                top: selectedBarValue.y - 40,
+                left: selectedBarValue.x,
+              }}>
+              <Text>{`$${selectedBarValue.value}`}</Text>
+            </View>
+          )}
         </View>
 
-        {selectedBarValue && (
-          <View
-            style={{
-              position: "absolute",
-              backgroundColor: "white",
-              padding: 8,
-              borderRadius: 4,
-              borderColor: "gray",
-              borderWidth: 1,
-              top: selectedBarValue.y - 40,
-              left: selectedBarValue.x,
-            }}>
-            <Text>{`$${selectedBarValue.value}`}</Text>
-          </View>
-        )}
-      </View>
-
-      <View>
-        {selectedRange.firstDate && (
-          <TouchableOpacity style={styles.appButtonContainer}>
-            <Text onPress={handleFilterByDate} style={styles.appButtonText}>
-              Filter By Date
+        <View>
+          {selectedRange.firstDate && (
+            <TouchableOpacity style={styles.appButtonContainer}>
+              <Text onPress={handleFilterByDate} style={styles.appButtonText}>
+                Filter By Date
+              </Text>
+            </TouchableOpacity>
+          )}
+          <TouchableOpacity style={styles.appButtonContainer1}>
+            <Text onPress={handleReset} style={styles.appButtonText}>
+              Reset
             </Text>
           </TouchableOpacity>
-        )}
-        <TouchableOpacity style={styles.appButtonContainer1}>
-          <Text onPress={handleReset} style={styles.appButtonText}>
-            Reset
-          </Text>
-        </TouchableOpacity>
-        {shouldShow && (
-          <DateRangePicker
-            onSelectDateRange={setRange}
-            responseFormat="YYYY-MM-DD"
-            maxDate={moment()}
-            containerStyle={styles.datePickerContainer}
-          />
-        )}
-        <Button
-          title={shouldShow ? "Hide Date Range" : "Show Date Range"}
-          onPress={() => setShouldShow(!shouldShow)}
-        />
+          <View>
+            {shouldShow && (
+              <DateRangePicker
+                onSelectDateRange={setRange}
+                responseFormat="YYYY-MM-DD"
+                maxDate={moment()}
+                //containerStyle={styles.datePickerContainer}
+              />
+            )}
+            <Button
+              title={shouldShow ? "Hide Date Range" : "Show Date Range"}
+              onPress={() => setShouldShow(!shouldShow)}
+            />
+          </View>
+        </View>
       </View>
     </ScrollView>
   );
@@ -174,7 +179,7 @@ const styles = StyleSheet.create({
     marginBottom: windowHeight * 0.02,
     justifyContent: "center",
     padding: windowWidth * 0.02,
-    backgroundColor: "#ecf0f1",
+    backgroundColor: "#F5FCFF",
   },
   title: {
     fontSize: windowWidth * 0.06,
@@ -193,12 +198,14 @@ const styles = StyleSheet.create({
     elevation: 8,
     backgroundColor: "blue",
     borderRadius: 10,
+    marginBottom: 10,
     paddingVertical: 10,
     paddingHorizontal: 12,
   },
   appButtonText: {
     fontSize: 18,
     color: "#fff",
+    paddingBottom: 5,
     fontWeight: "bold",
     alignSelf: "center",
     textTransform: "uppercase",

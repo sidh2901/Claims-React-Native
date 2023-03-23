@@ -10299,6 +10299,13 @@ react-native-codegen@^0.70.6:
     jscodeshift "^0.13.1"
     nullthrows "^1.1.1"
 
+react-native-currency-formatter@^1.0.1, react-native-currency-formatter@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/react-native-currency-formatter/-/react-native-currency-formatter-1.0.3.tgz#45047fd156a43500a5fe4bd498b478329981b3f5"
+  integrity sha512-IEaTMIPRMDYUF9TH8BH7EMx7MlIIt3F9T0pHNUBnGtDZMaDwg1PveaAfwHgCb2PQh9KiBm8/SDkjPBPkrtwGPA==
+  dependencies:
+    react-native-currency-formatter "^1.0.1"
+
 react-native-dashboard@^0.0.6:
   version "0.0.6"
   resolved "https://registry.yarnpkg.com/react-native-dashboard/-/react-native-dashboard-0.0.6.tgz#dfa2650b0603efa2c95127f432bf2c5191c20906"
